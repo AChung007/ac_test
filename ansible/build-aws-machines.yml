@@ -1,0 +1,23 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: true
+
+  pre_tasks:
+
+  - name: Find latest CentOS7 AMI
+    ec2_ami_find:
+      name: "{{ ec2instance_ami_name }}"
+      region:  "{{ region }}"
+      owner: "{{ ec2instance_ami_owner }}"
+      sort: name
+      sort_order: descending
+      sort_end: "{{ ec2instance_ami_sort_count }}"
+    register: latest_centos_ami
+
+  - name: debug centos ami output
+    debug: var=latest_centos_ami
+    when: debug is defined and debug|bool == True
+
+  roles:
+    - { role: machine, node_type: jenkins_node }

@@ -1,0 +1,6 @@
+---
+- import_playbook: build-aws-machines.yml
+- import_playbook: build-jenkins-host.yml
+  vars:
+    machine_role: jenkins
+...

@@ -1,0 +1,10 @@
+[chc]
+localhost ansible_connection=local ansible_python_interpreter=python
+
+[chc:children]
+controlbox_host
+jenkins_host
+
+[controlbox_host]
+
+[jenkins_host]

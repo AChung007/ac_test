@@ -1,0 +1,33 @@
+- hosts: jenkins_host
+  become: true
+
+  pre_tasks:
+  - name: get EC2 facts
+    ec2_metadata_facts:
+    ignore_errors: true
+
+  tasks:
+  - import_role:
+      name: ssh-users
+    tags: users
+  - import_role:
+      name: ansible
+    tags: ansible
+  - import_role:
+      name: git
+    tags: git
+  - import_role:
+      name: kubectl
+    tags: kubectl
+    when: additional_dependencies is defined
+  - import_role:
+      name: java
+    tags: java
+  - import_role:
+      name: dependencies
+    tags: dependencies
+    when: additional_dependencies is defined
+  - import_role:
+      name: jenkins
+    tags: jenkins
+
